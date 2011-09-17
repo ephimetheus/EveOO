@@ -22,7 +22,7 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 				$sub_children = $child->children() ;
 				if(count($sub_children) == 0)
 				{
-					$this->data[$child->getName()] = (string)$child;
+					$this->data[$child->getName()] = (string)$child ;
 				}
 				else
 				{
@@ -46,7 +46,7 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 	
 	public function offsetExists($offset)
 	{
-		return isset($this->data[$offset]);
+		return isset($this->data[$offset]) ;
 	}
 	public function offsetUnset($offset)
 	{
@@ -55,7 +55,7 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 	
 	public function offsetGet($offset)
 	{
-		return isset($this->data[$offset]) ? $this->data[$offset] : null;
+		return isset($this->data[$offset]) ? $this->data[$offset] : null ;
 	}
 	
 	function __get($offset)
