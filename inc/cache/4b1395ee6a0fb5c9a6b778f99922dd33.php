@@ -1,1 +1,0 @@
-<?php /*1316272838O:12:"EveApiResult":2:{s:4:"data";O:8:"EveArray":1:{s:12:"EveArrayData";a:2:{s:13:"currentTQTime";s:19:"2011-09-17 15:01:43";s:15:"skillInTraining";s:1:"0";}}s:4:"type";s:15:"SkillInTraining";}
