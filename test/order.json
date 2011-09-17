@@ -1,0 +1,34 @@
+{
+	"Account Data": [
+		"Characters",
+		"AccountStatus"
+	],
+	"Character Data": [
+		"AccountBalance",
+		"AssetList",
+		"CalendarEventAttendees",
+		"CharacterSheet",
+		"ContactList",
+		"ContactNotifications",
+		"FacWarStats",
+		"IndustryJobs",
+		"KillLog",
+		"MailingLists",
+		"MailBodies",
+		"MailMessages",
+		"MarketOrders",
+		"Medals",
+		"NotificationTexts",
+		"Notifications",
+		"Standings",
+		"Research",
+		"SkillInTraining",
+		"SkillQueue",
+		"UpcomingCalendarEvents",
+		"WalletJournal",
+		"WalletTransactions"
+	],
+	"Eve": [
+		"SkillTree"
+	]
+}

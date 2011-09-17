@@ -1,0 +1,1 @@
+<?php /*1316283301O:12:"EveApiResult":2:{s:4:"data";O:8:"EveArray":1:{s:12:"EveArrayData";a:2:{s:18:"currentCorporation";O:18:"EveApiRowsetResult":1:{s:6:"rowset";O:8:"EveArray":1:{s:12:"EveArrayData";a:0:{}}}s:17:"otherCorporations";O:18:"EveApiRowsetResult":1:{s:6:"rowset";O:8:"EveArray":1:{s:12:"EveArrayData";a:0:{}}}}}s:4:"type";s:6:"Medals";}
