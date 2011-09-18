@@ -1,9 +1,21 @@
 <?php
 
+/**
+ * Implementation of the CacheMethod interface. Stores cached values in php files, one for each pair.
+ *
+ * @package EveOO
+ * @author Paul Gessinger
+ */
 class FlatFileCache implements CacheMethod 
 {
 	protected $cache_dir ;
 	
+	
+	/**
+	 * Locate the cache directory and make sure it is writable.
+	 *
+	 * @author Paul Gessinger
+	 */
 	function __construct()
 	{
 		$this->cache_dir = Eve::$path.'cache/' ;
@@ -19,6 +31,18 @@ class FlatFileCache implements CacheMethod
 		}
 	}
 	
+	
+	/**
+	 * Store pairs in the cache. The expiration is prepended to the serialized string, and <?php /* is prepended to this
+	 * so a client cannot access the cache files to retrieve API credential info.
+	 * if cache_compress is set to true, cached data is gzcompress'd.
+	 *
+	 * @param string $key 
+	 * @param string $value 
+	 * @param string $expire 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function store($key, $value, $expire)
 	{
 		$data = serialize($value) ;
@@ -31,6 +55,15 @@ class FlatFileCache implements CacheMethod
 		file_put_contents($this->cache_dir.md5($key).'.php', '<?php /*'.$expire.$data) ;
 	}
 	
+	
+	/**
+	 * Get a handle for the cache file we are looking for. Deletes the file, if the 
+	 * expiration date has passed.
+	 *
+	 * @param string $file 
+	 * @return null or file handle
+	 * @author Paul Gessinger
+	 */
 	private function getHandle($file)
 	{
 		$tz = new DateTimeZone('UTC') ;
@@ -56,6 +89,14 @@ class FlatFileCache implements CacheMethod
 		return $handle ;
 	}
 	
+	
+	/**
+	 * Retrieves data from the cache. Uses FlatFileCache::getHandle() and reads the rest of the files content.
+	 *
+	 * @param string $key 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function retrieve($key)
 	{
 		$file = $this->cache_dir.md5($key).'.php' ;
@@ -77,6 +118,14 @@ class FlatFileCache implements CacheMethod
 		return unserialize($data) ;
 	}
 	
+	
+	/**
+	 * Uses FlatFileCache::getHandle() to determine if data is associated to the key given.
+	 *
+	 * @param string $key 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function exists($key)
 	{
 		$file = $this->cache_dir.md5($key).'.php' ;
@@ -91,8 +140,20 @@ class FlatFileCache implements CacheMethod
 		return true ;
 	}
 	
+	
+	/**
+	 * Deletes the file belonging to the key given, if it exists.
+	 *
+	 * @param string $key 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function remove($key)
 	{
-		
+		$file = $this->cache_dir.md5($key).'.php' ;
+		if(file_exists($file))
+		{
+			unlink($file) ;
+		}
 	}
 }

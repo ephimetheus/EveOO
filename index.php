@@ -1,5 +1,4 @@
 <?php
-//header ("Content-Type:text/xml");  
 
 ob_start() ;
 
@@ -14,8 +13,7 @@ $starttime = microtime();
 $starttime = explode(" ",$starttime); 
 $starttime = $starttime[1] + $starttime[0];
 
-require_once 'inc/EveApiObject.php' ;
-require_once 'inc/Eve.php' ;
+require_once 'inc/EveOO.php' ;
 
 $eve = new Eve(array(
 	'cache_compress' => false // you must clear cache if you change this.

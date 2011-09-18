@@ -1,10 +1,26 @@
 <?php
 
+/**
+ * Base class for all classes representing eve api scopes.
+ *
+ * @package default
+ * @author Paul Gessinger
+ */
 abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 {
 	protected $global = array() ;
 	var $embedded = null ;
 	
+	
+	/**
+	 * Map calls to the object to api calls. getXX gets the content from either cache or api and just returns it,
+	 * loadXX incorporates the data into the $embedded property.
+	 *
+	 * @param string $call 
+	 * @param string $arguments 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function __call($call, $arguments = array())
 	{
 		if(substr($call, 0, 3) !== 'get')
@@ -35,6 +51,16 @@ abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 		return $result ;
 	}
 	
+	
+	/**
+	 * Merges the global values for this scope into the arguments given, and passes on to Eve
+	 *
+	 * @param string $scope 
+	 * @param string $method 
+	 * @param string $arguments 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function call($scope, $method, $arguments = array())
 	{
 		if(!is_array($arguments))
@@ -49,6 +75,15 @@ abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 		return $this->eve->call($scope, $method, $arguments) ;
 	}
 	
+	
+	/**
+	 * Embeds data from an api call (or cache) into this objects $embedded property.
+	 *
+	 * @param string $method 
+	 * @param string $arguments 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function loadIntoObject($method, $arguments)
 	{
 		if($this->embedded === null)
@@ -70,6 +105,14 @@ abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 		return $this ;
 	}
 	
+	
+	/**
+	 * Alias for loadIntoObject, allowing for multiple methods to be incorporated at once.
+	 *
+	 * @param array $methods 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function load(array $methods)
 	{
 		foreach($methods as $method)
@@ -86,6 +129,14 @@ abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 		return $this ;
 	}
 	
+	
+	/**
+	 * Magic getter for accessing properties within $embedded.
+	 *
+	 * @param string $name 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function __get($name) 
 	{
 		if(isset($this->embedded[$name]))
@@ -98,30 +149,80 @@ abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 		}
 	}
 	
+	
+	/**
+	 * Magic setter for properties within $embedded.
+	 *
+	 * @param string $name 
+	 * @param string $value 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function __set($name, $value)
 	{
 		return $this->embedded[$name] = $value ;
 	}
 	
+	
+	/**
+	 * Setter for ArrayAccess
+	 *
+	 * @param string $offset 
+	 * @param string $value 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	public function offsetSet($offset, $value)
 	{
 		$this->embedded[$offset] = $value ;
 	}
 	
+	
+	/**
+	 * Isset implementation for ArrayAccess
+	 *
+	 * @param string $offset 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	public function offsetExists($offset)
 	{
 		return isset($this->embedded[$offset]);
 	}
+	
+	
+	/**
+	 * Unset implementation for ArrayAccess
+	 *
+	 * @param string $offset 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	public function offsetUnset($offset)
 	{
 		unset($this->embedded[$offset]) ;
 	}
 	
+	
+	/**
+	 * Unset implementation for ArrayAccess
+	 *
+	 * @param string $offset 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	public function offsetGet($offset)
 	{
 		return isset($this->embedded[$offset]) ? $this->embedded[$offset] : null;
 	}
 	
+	
+	/**
+	 * Returns an iterator for $embedded.
+	 *
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function getIterator()
 	{
 		if($this->embedded === null)
