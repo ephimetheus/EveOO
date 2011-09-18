@@ -1,13 +1,6 @@
 <?php
 
-$character = $eve->getCharacter('90423421') ;
-//echo json_encode($character->getCharacterSheet()) ;
-
-//$character->loadMailBodies(array('ids' => array('306700306', '306676108', '306725618'))) ;
-/*$character->loadCharacterSheet() ;
-$character->loadAccountBalance() ;
-$character->loadAssetList() ;
-$character->loadMarketOrders() ;*/
+$character = new Character('90423421') ;
 $character->load(array(
 					array('CharacterSheet'), 
 					array('AccountBalance'), 
@@ -48,9 +41,3 @@ $character->load(array(
 			}
 
 draw_tree($character) ;
-
-//print_r($character) ;
-
-//echo $character->skills[3300]->skillpoints ;
-
-//echo json_encode($character) ;

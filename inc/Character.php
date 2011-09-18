@@ -5,7 +5,7 @@ class Character extends EveApiObject
 	protected $scope = 'char' ;
 	var $eve ;
 	
-	function __construct($characterID, Eve $eve)
+	function __construct($characterID)
 	{
 		$this->global['characterID'] = $characterID ;
 		$this->eve = $eve ;

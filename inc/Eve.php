@@ -103,10 +103,6 @@ class Eve extends EveApiObject {
 		return $this->call('account', 'Characters', $arguments) ;
 	}
 	
-	function getCharacter($characterID)
-	{
-		return new Character($characterID, $this) ;
-	}
 	
 	function getAccountStatus(array $arguments = array())
 	{
