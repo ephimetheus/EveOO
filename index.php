@@ -16,7 +16,8 @@ $starttime = $starttime[1] + $starttime[0];
 require_once 'inc/EveOO.php' ;
 
 $eve = new Eve(array(
-	'cache_compress' => false // you must clear cache if you change this.
+	'cache_compress' => false, // you must clear cache if you change this.
+	//'cache_dir' => 'inc/cache/'
 )) ;
 
 $eve->setKeyID('33338') ;
@@ -25,11 +26,7 @@ $eve->setVCode('jNNcOcS2Q6t0RJRybautXVSFTGc6siXfGNOwEj67zABoJS8RCopN1ZrplVfOFGqc
 try
 {
 
-if(!file_exists('test/tests/'.$_GET['test'].'.php'))
-{
-	echo json_encode(array('status' => 'fault', 'message' => 'Unable to load test.')) ;
-	die();
-}
+
 
 function draw_tree($var, $depth = 0)
 {
@@ -70,15 +67,22 @@ function draw_tree($var, $depth = 0)
 	}
 }
 
+	if(!file_exists('test/tests/'.$_GET['test'].'.php'))
+	{
+		draw_tree(array('status' => 'fault', 'message' => 'Unable to load test.')) ;	
+	}
+	else
+	{
+		include 'test/tests/'.$_GET['test'].'.php' ;
+	}
 
 
-include 'test/tests/'.$_GET['test'].'.php' ;
 
 }
 catch(Exception $e)
 {
-	draw_tree(array('status' => 'fault', 'message' => $e->getMessage(), 'code' => $e->getCode(), 'line' => $e->getLine(), 'file' => $e->getFile())) ;
-	die() ;
+	draw_tree(array('status' => 'fault', 'message' => $e->getMessage(), 'code' => $e->getCode(), 'line' => (string)$e->getLine(), 'file' => $e->getFile())) ;
+	
 }
 
 
@@ -90,6 +94,6 @@ $endtime = $endtime[1] + $endtime[0];
 
 $totaltime = round(($endtime - $starttime)*1000, 2);
 
-echo $ob ;
+echo json_encode(array('data' => $ob, 'cache_period' => Cache::getInstance()->getCachePeriod())) ;
 
 

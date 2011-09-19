@@ -11,7 +11,7 @@ class Eve extends EveApiObject {
 	protected $scope = 'eve' ;
 	static $param = array() ;
 	static $instance ;
-	var $api_path = 'https://api.eveonline.com/' ;
+	var $api_path = 'https:\/\/api.eveonline.com/' ;
 	protected $global = array() ;
 
 
@@ -23,6 +23,8 @@ class Eve extends EveApiObject {
 	 */
 	function __construct(array $param = array())
 	{
+		$this->api_path = stripslashes($this->api_path) ;
+		
 		Eve::$param = $param ;
 		
 		Eve::$instance = $this ;

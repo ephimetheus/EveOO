@@ -30,7 +30,8 @@
 
 		?>
 		
-		Response time: <span id="stopwatch"></span>
+		Response time: <span id="stopwatch"></span><br/>
+		Cached: <span id="cache_rough"></span> <span id="cache"></span>
 		
     </div>
     <div style="width:85%;height:99%;position:absolute;right:20px;" id="right_div">
