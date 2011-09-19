@@ -5,6 +5,7 @@ var cache_timer ;
 var apicall = function(url) {
 	
 	$('.test_link').unbind('click') ;
+	$('.test_link').click(function() {return false ;}) ;
 	
 	
 	var return_data = 'leer' ;
@@ -71,8 +72,12 @@ var apicall = function(url) {
 			
 			$('.loader').css({opacity: 0}) ;
 			
-			
+			$('.test_link').unbind('click') ;
 			$('.test_link').click(function() {
+				
+				$('.test_link').removeClass('active') ;
+				$(this).addClass('active') ;
+				
 				apicall($(this).attr('href')) ;
 				return false ;
 			}) ;
@@ -171,6 +176,10 @@ $(document).ready(function() {
 	$('.loader').css({opacity: 0}) ;
 	
 	$('.test_link').click(function() {
+		
+		$('.test_link').removeClass('active') ;
+		$(this).addClass('active') ;
+		
 		apicall($(this).attr('href')) ;
 		return false ;
 	}) ;

@@ -9,10 +9,38 @@
 	<script type="text/javascript" src="json2.js"></script> 
 	<script type="text/javascript" src="glue.js"></script> 
 	
+	<style type="text/css">
+
+	body {
+		padding:0px;
+		margin:0px;
+		font-family:Arial;
+	}
+	
+	.test_link {
+		padding:0px 10px 0px 10px;
+		display:block;
+		text-decoration:none;
+		color:#000000;
+		font-size:14px;
+	}
+	
+	.test_link:hover, .test_link.active {
+		background-color:gray;
+		color:#ffffff;
+	}
+	
+	.sec {
+		padding:20px 0px 10px 10px;
+		display:block;
+	}
+	
+	</style>
+	
 	</head> 
 <body>
 
-	<div style="width:33%;float:left;margin-right:20px;margin-bottom:20px;">
+	<div style="width:200px;border:1px solid grey;position:absolute;top:20px;bottom:100px;left:20px;overflow:auto;padding-bottom:30px;">
    
 		<?php
 		
@@ -20,24 +48,25 @@
 
 		foreach($json as $section => $subs)
 		{
-			echo '<strong>'.$section.'</strong><br/>' ;
+			echo '<strong class="sec">'.$section.'</strong>' ;
 			foreach($subs as $link)
 			{
-				echo '<a class="test_link" href="../index.php?test='.$link.'">'.$link.'</a><br/>' ;	
+				echo '<a class="test_link" href="../index.php?test='.$section.$link.'">'.$link.'</a>' ;	
 			}
-			echo '<br/>' ;
 		}
 
 		?>
 		
+    </div>
+
+	<div style="position:absolute;bottom:27px;left:20px;border:1px solid gray;width:180px;padding:10px;font-size:14px;">
 		Response time: <span id="stopwatch"></span><br/>
 		Cached: <span id="cache_rough"></span> <span id="cache"></span>
-		
-    </div>
-    <div style="width:85%;height:99%;position:absolute;right:20px;" id="right_div">
+	</div>
+
+    <div style="position:absolute;right:45px;left:240px;top:20px;bottom:50px;" id="right_div">
     <img src="ajax-loader.gif" class="loader" style="position:absolute;left:50%;top:50%;margin-left:-8px;margin-top:-5px;" />
-    	<span>Result: <br/></span>
-   		<div style="border:1px solid gray;width:100%;height:95%;overflow:auto;padding:10px;" id="json_result"><pre style="margin:0px;"></pre></div>
+   		<div style="border:1px solid gray;width:100%;height:100%;overflow:auto;padding:10px;" id="json_result"><pre style="margin:0px;"></pre></div>
     </div>
 
 </body>

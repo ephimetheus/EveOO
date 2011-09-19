@@ -63,6 +63,13 @@ function draw_tree($var, $depth = 0)
 			}
 			
 			echo '} '.$newline ;
+			
+			for($i = 0;$i<($depth);$i++)
+			{
+				echo $indent ;
+			}
+			
+			echo $newline ;
 		}
 	}
 }
