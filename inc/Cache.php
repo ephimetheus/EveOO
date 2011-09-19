@@ -9,6 +9,7 @@ class Cache
 {
 	static protected $instance ;
 	protected $cache_provider ;
+	protected $cachePeriod ;
 	
 	
 	/**
@@ -41,6 +42,16 @@ class Cache
 		return self::$instance ;
 	}
 	
+	
+	function setCachePeriod($secs)
+	{
+		 $this->cachePeriod = $secs ;
+	}
+	
+	function getCachePeriod()
+	{
+		 return $this->cachePeriod ;
+	}
 	
 	/**
 	 * Set the cache method from the outside. May only be set before Cache has been instantiated.

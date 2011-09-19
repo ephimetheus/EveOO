@@ -18,7 +18,14 @@ class FlatFileCache implements CacheMethod
 	 */
 	function __construct()
 	{
-		$this->cache_dir = Eve::$path.'cache/' ;
+		if(isset(Eve::$param['cache_dir']))
+		{
+			$this->cache_dir = Eve::$param['cache_dir'] ;
+		}
+		else
+		{
+			$this->cache_dir = Eve::$path.'cache/' ;
+		}
 		
 		if(!file_exists($this->cache_dir))
 		{
@@ -52,7 +59,9 @@ class FlatFileCache implements CacheMethod
 			$data = gzcompress($data) ;
 		}
 		
-		file_put_contents($this->cache_dir.md5($key).'.php', '<?php /*'.$expire.$data) ;
+		Cache::getInstance()->setCachePeriod($expire - Eve::getDate('now')) ;
+		
+		file_put_contents($this->cache_dir.md5($key).'.php', '<?php /'.'*'.$expire.$data) ;
 	}
 	
 	
@@ -85,6 +94,8 @@ class FlatFileCache implements CacheMethod
 			unlink($file) ;
 			return null ;
 		}
+		
+		Cache::getInstance()->setCachePeriod($expire - $now) ;
 		
 		return $handle ;
 	}
