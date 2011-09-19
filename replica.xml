@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<load>
+		<item type="php">inc/EveException.php</item>
+		<item type="php">inc/EveApiObject.php</item>
+		<item type="php">inc/Eve.php</item>
+		<item type="php">inc/Character.php</item>
+		<item type="php">inc/Cache.php</item>
+		<item type="php">inc/FlatFileCache.php</item>
+		<item type="php">inc/CacheMethod.php</item>
+		<item type="php">inc/EveApiResult.php</item>
+		<item type="php">inc/EveArray.php</item>
+		<item type="php">inc/EveApiRowsetResult.php</item>
+	</load>
+</root>
