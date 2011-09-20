@@ -1,3 +1,4 @@
 /eveoo.tmproj
 /inc/cache/*
+!.gitignore
 /sensitive.php
