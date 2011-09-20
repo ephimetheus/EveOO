@@ -1,4 +1,4 @@
-<?php 
+ <?php 
 class EveException extends Exception {}
 abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 {

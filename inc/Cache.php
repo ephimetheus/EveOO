@@ -43,11 +43,25 @@ class Cache
 	}
 	
 	
+	/**
+	 * Store the cache period.
+	 *
+	 * @param string $secs 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function setCachePeriod($secs)
 	{
 		 $this->cachePeriod = $secs ;
 	}
 	
+	
+	/**
+	 * Retrieve the last cache period.
+	 *
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function getCachePeriod()
 	{
 		 return $this->cachePeriod ;

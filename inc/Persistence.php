@@ -6,8 +6,9 @@ class Persistence
 	protected $redbean ;
 	static protected $db_data = array() ;
 	
+	
 	/**
-	 * 
+	 * Constructs the persistence singleton. This configures the redbean lib with the values found in $db_data
 	 *
 	 * @author Paul Gessinger
 	 */
@@ -33,6 +34,13 @@ class Persistence
 	}
 	
 	
+	/**
+	 * Store db configuration for redbean. Can only be called before the singleton has been instantiated.
+	 *
+	 * @param array $db_data 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	static function configure(array $db_data)
 	{
 		if((self::$instance instanceof Persistence))

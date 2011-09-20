@@ -41,7 +41,7 @@ class FlatFileCache implements CacheMethod
 	
 	/**
 	 * Store pairs in the cache. The expiration is prepended to the serialized string, and <?php /* is prepended to this
-	 * so a client cannot access the cache files to retrieve API credential info.
+	 * so the client cannot access the cache files to retrieve API credential info.
 	 * if cache_compress is set to true, cached data is gzcompress'd.
 	 *
 	 * @param string $key 

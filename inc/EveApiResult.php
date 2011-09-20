@@ -50,16 +50,38 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 		}
 	}
 	
+	
+	/**
+	 * Magic wakeup method to determine if this object has come from cache.
+	 *
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function __wakeup()
 	{
 		$this->from_cache = true ;
 	}
 	
+	
+	/**
+	 * Returns if this object comes from cache.
+	 *
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function isFromCache()
 	{
 		return $this->from_cache ;
 	}
 	
+	
+	/**
+	 * Persist this EveApiResult object, using the persistor associated for this type.
+	 *
+	 * @param string $force 
+	 * @return void
+	 * @author Paul Gessinger
+	 */
 	function persist($force = false)
 	{
 		$class = $this->type.'Persistor' ;
