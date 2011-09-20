@@ -20,6 +20,12 @@ $eve = new Eve(array(
 	//'cache_dir' => 'inc/cache/'
 )) ;
 
+Persistence::configure(array(
+	'host' => 'localhost',
+	'usr' => 'root',
+	'name' => 'evedata_persist'
+)) ;
+
 $eve->setKeyID('33338') ;
 $eve->setVCode('jNNcOcS2Q6t0RJRybautXVSFTGc6siXfGNOwEj67zABoJS8RCopN1ZrplVfOFGqc') ;
 

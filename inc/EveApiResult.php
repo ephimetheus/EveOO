@@ -11,6 +11,7 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 {
 	var $data ;
 	var $type ;
+	var $from_cache = false ;
 	
 	
 	/**
@@ -47,6 +48,38 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 			}
 			
 		}
+	}
+	
+	function __wakeup()
+	{
+		$this->from_cache = true ;
+	}
+	
+	function isFromCache()
+	{
+		return $this->from_cache ;
+	}
+	
+	function persist($force = false)
+	{
+		$class = $this->type.'Persistor' ;
+		
+		if(!class_exists($class))
+		{
+			throw new EveException('No valid persistor found for "'.$this->type.'"') ;
+		}
+		
+		$persistor = new $class ;
+		
+		if(!($persistor instanceof PersistorInterface))
+		{
+			throw new EveException('"'.$class.'" is not a valid persistor') ;
+		}
+		
+		Persistence::getInstance() ;
+		
+		$persistor->setData($this) ;
+		$persistor->persist($force) ;
 	}
 
 
