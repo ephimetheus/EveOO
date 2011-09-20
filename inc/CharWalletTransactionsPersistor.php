@@ -1,6 +1,6 @@
 <?php
 
-class WalletTransactionsPersistor extends AbstractPersistor
+class CharWalletTransactionsPersistor extends AbstractPersistor
 {
 	function __construct() {}
 	
