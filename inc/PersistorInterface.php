@@ -8,5 +8,5 @@
  */
 interface PersistorInterface
 {
-	function setData($data) ;
+	function setData(EveApiResult $data) ;
 }
