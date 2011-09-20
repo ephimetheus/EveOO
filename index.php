@@ -26,8 +26,8 @@ Persistence::configure(array(
 	'name' => 'evedata_persist'
 )) ;
 
-$eve->setKeyID('33338') ;
-$eve->setVCode('jNNcOcS2Q6t0RJRybautXVSFTGc6siXfGNOwEj67zABoJS8RCopN1ZrplVfOFGqc') ;
+// file not under version control
+include 'sensitive.php' ;
 
 try
 {

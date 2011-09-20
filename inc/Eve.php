@@ -148,8 +148,8 @@ class Eve extends EveApiObject {
 		{
 			throw new EveException((string)$xml->error, (int)$xml->error['code']) ;
 		}
-		
-		$result_object = new EveApiResult($xml->result, $method) ;
+
+		$result_object = new EveApiResult($xml->result, ucfirst($scope).$method) ;
 		
 		Cache::store($url, $result_object, Eve::getDate((string)$xml->cachedUntil)) ;
 		
