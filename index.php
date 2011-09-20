@@ -26,7 +26,11 @@ Persistence::configure(array(
 	'name' => 'evedata_persist'
 )) ;
 
-// file not under version control
+/** 
+ * file not under version control, don't look.
+ * $eve->setKeyID('KEY') ;
+ * $eve->setVCode('VCODE') ;
+ */
 include 'sensitive.php' ;
 
 try
