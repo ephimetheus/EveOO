@@ -28,32 +28,6 @@
 		"WalletJournal",
 		"WalletTransactions"
 	],
-	"Corporation": [
-		"AccountBalance",
-		"AssetList",
-		"ContactList",
-		"ContainerLog",
-		"CorporationSheet",
-		"FactionalWarfare",
-		"Statistics",
-		"IndustryJobs",
-		"KillLog",
-		"MarketOrders",
-		"Medals",
-		"MemberMedals",
-		"MemberSecurity",
-		"MemberSecurityLog",
-		"MemberTracking",
-		"NPCStandings",
-		"OutpostList",
-		"OutpostServiceDetail",
-		"POSDetail",
-		"POSList",
-		"Shareholder",
-		"Titles",
-		"WalletJournal",
-		"WalletTransactions"
-	],
 	"Eve": [
 		"SkillTree"
 	]
