@@ -44,6 +44,17 @@ function draw_tree($var, $depth = 0)
 	$indent = '&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' ;
 	//$space = '' ;
 	
+	if(!is_array($var) AND !is_object($var))
+	{
+		for($i = 0;$i<$depth;$i++)
+		{
+			echo $indent ;
+		}
+		
+		var_dump($var) ;
+		return true ;
+	}
+	
 	foreach($var as $k => $v)
 	{
 		if(is_string($v))
@@ -111,6 +122,6 @@ $endtime = $endtime[1] + $endtime[0];
 
 $totaltime = round(($endtime - $starttime)*1000, 2);
 
-echo json_encode(array('data' => $ob, 'cache_period' => Cache::getInstance()->getCachePeriod())) ;
+echo json_encode(array('data' => utf8_encode($ob), 'cache_period' => Cache::getInstance()->getCachePeriod())) ;
 
 

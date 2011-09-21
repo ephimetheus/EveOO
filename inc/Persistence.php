@@ -5,6 +5,7 @@ class Persistence
 	static protected $instance ;
 	protected $redbean ;
 	static protected $db_data = array() ;
+	static protected $configured = false ;
 	
 	
 	/**
@@ -33,6 +34,10 @@ class Persistence
 		R::$writer->setBeanFormatter(new BeanFormatter()) ;
 	}
 	
+	static function isConfigured()
+	{
+		return self::$configured ;
+	}
 	
 	/**
 	 * Store db configuration for redbean. Can only be called before the singleton has been instantiated.
@@ -47,6 +52,8 @@ class Persistence
 		{
 			throw new EveException('Cannot configure Persistence after it has been instantiated.') ;
 		}
+		
+		self::$configured = true ;
 		
 		$merge = array(
 			'host' => null,
@@ -64,7 +71,7 @@ class Persistence
 	 * @return void
 	 * @author Paul Gessinger
 	 */
-	static function getInstance()
+	static function launch()
 	{
 		if(!(self::$instance instanceof Persistence))
 		{

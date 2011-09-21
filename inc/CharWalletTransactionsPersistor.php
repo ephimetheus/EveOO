@@ -20,12 +20,22 @@ class CharWalletTransactionsPersistor extends AbstractPersistor
 	 */
 	function performPersist()
 	{
+		$character = $this->data->registry['scope'] ;
+		
 		foreach($this->data->transactions as $transaction)
 		{
-			$bean = R::findOrDispense('transaction', 'transactionID=?', array($transaction->transactionID)) ;
+			$bean = R::findOne('transaction', 'transactionID=?', array($transaction->transactionID)) ;
 			
-			$bean = array_shift($bean) ;
+			$id = $bean->{BeanFormatter::_formatBeanId('transaction')} ;
+			
+			if(!empty($id))
+			{
+				continue;
+			}
+			
+			$bean = R::dispense('transaction') ;
 
+			$bean->characterID = $character->global['characterID'] ;
 			
 			foreach($transaction as $k => $v)
 			{

@@ -12,7 +12,7 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 	var $data ;
 	var $type ;
 	var $from_cache = false ;
-	
+	var $registry ;
 	
 	/**
 	 * Transform the xml data into an EveArray, and hands over rowset nodes to EveApiRowsetResult
@@ -62,6 +62,15 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 		$this->from_cache = true ;
 	}
 	
+	function __sleep() 
+	{
+		return array('type', 'data') ;
+	}
+	
+	function setRegistry($reg)
+	{
+		$this->registry = $reg ;
+	}
 	
 	/**
 	 * Returns if this object comes from cache.
@@ -88,7 +97,7 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 		
 		if(!class_exists($class))
 		{
-			throw new EveException('No valid persistor found for "'.$this->type.'"') ;
+			throw new EveException('No valid persistor found for "'.$class.'"') ;
 		}
 		
 		$persistor = new $class ;
@@ -98,7 +107,7 @@ class EveApiResult implements IteratorAggregate, ArrayAccess
 			throw new EveException('"'.$class.'" is not a valid persistor') ;
 		}
 		
-		Persistence::getInstance() ;
+		Persistence::launch() ;
 		
 		$persistor->setData($this) ;
 		$persistor->persist($force) ;

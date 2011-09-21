@@ -12,7 +12,7 @@ class Eve extends EveApiObject {
 	static $param = array() ;
 	static $instance ;
 	var $api_path = 'https:\/\/api.eveonline.com/' ;
-	protected $global = array() ;
+	protected $reg = array() ;
 
 
 	/**
@@ -48,6 +48,21 @@ class Eve extends EveApiObject {
 		{
 			include Eve::$path.$name.'.php' ;
 		}
+	}
+	
+	static function register($key, $value)
+	{
+		return self::$instance->reg[$key] = $value ;
+	}
+	
+	static function wipeRegistry()
+	{
+		self::$instance->reg = array() ;
+	}
+	
+	static function getRegistry()
+	{
+		return self::$instance->reg ;
 	}
 	
 	
@@ -105,7 +120,7 @@ class Eve extends EveApiObject {
 	 * @return void
 	 * @author Paul Gessinger
 	 */
-	function call($scope, $method, $arguments = array()) 
+	function call($scope, $method, $arguments = array(), $cache = true) 
 	{
 		if(!is_array($arguments))
 		{
@@ -128,10 +143,20 @@ class Eve extends EveApiObject {
 			$url = $url.'?'.implode($tmp_arr, '&') ;
 		}
 
-		if(Cache::exists($url))
+		if($cache === true)
 		{
-			return Cache::retrieve($url) ;
+			if(Cache::exists($url))
+			{
+				$cached_result = Cache::retrieve($url) ;
+				$cached_result->setRegistry(Eve::$instance->getRegistry()) ;
+
+				Eve::wipeRegistry() ;
+				
+				return $cached_result ;
+			}	
 		}
+		
+		
 
 		$curl = curl_init() ;
 		curl_setopt_array($curl, array(
@@ -140,9 +165,14 @@ class Eve extends EveApiObject {
 			CURLOPT_SSL_VERIFYPEER => false
 		)) ;
 		
+		
+		
 		$result = curl_exec($curl) ;
 		
+		libxml_use_internal_errors(true);
+		
 		$xml = new SimpleXMLElement($result) ;
+		
 		
 		if(isset($xml->error))
 		{
@@ -151,7 +181,17 @@ class Eve extends EveApiObject {
 
 		$result_object = new EveApiResult($xml->result, ucfirst($scope).$method) ;
 		
-		Cache::store($url, $result_object, Eve::getDate((string)$xml->cachedUntil)) ;
+		$result_object->setRegistry(Eve::$instance->getRegistry()) ;
+		
+		Eve::wipeRegistry() ;
+		
+		
+		if($cache === true)
+		{
+			Cache::store($url, $result_object, Eve::getDate((string)$xml->cachedUntil)) ;
+		}
+		
+		
 		
 		return $result_object ;
 	}

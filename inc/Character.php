@@ -38,14 +38,43 @@ class Character extends EveApiObject
 			$param['ids'] = implode(',', $param['ids']) ;
 		}
 		
-		$result = $this->call($this->scope, 'MailBodies', $param) ;
+		
+		
+		$result = $this->call($this->scope, 'MailBodies', $param, false) ;
 		
 		foreach($result->messages as $key => $message)
 		{
 			$message->data = htmlentities($message->data) ;
 		}
 		
+		
 		return $result ;
+	}
+	
+	function getEmptyMailBodies()
+	{
+		if(!Persistence::isConfigured())
+		{
+			throw new EveException('Cannot use getALlMailBodies when not using database persistence.') ;
+		}
+		
+		Persistence::launch() ;
+		
+		$empties = R::find('message', 'message is NULL AND characterID=?', array($this->global['characterID'])) ;
+		
+		if(count($empties) === 0)
+		{
+			return false ;
+		}
+		
+		$id_array = array() ;
+		
+		foreach($empties as $bean)
+		{
+			$id_array[] = $bean->messageID ;
+		}
+		
+		return $this->getMailBodies(array('ids' => implode(',', $id_array))) ;
 	}
 	
 }

@@ -8,7 +8,7 @@
  */
 abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 {
-	protected $global = array() ;
+	var $global = array() ;
 	var $embedded = null ;
 	
 	
@@ -58,10 +58,11 @@ abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 	 * @param string $scope 
 	 * @param string $method 
 	 * @param string $arguments 
+	 * @param bool $cache
 	 * @return void
 	 * @author Paul Gessinger
 	 */
-	function call($scope, $method, $arguments = array())
+	function call($scope, $method, $arguments = array(), $cache = true)
 	{
 		if(!is_array($arguments))
 		{
@@ -70,9 +71,9 @@ abstract class EveApiObject implements IteratorAggregate, ArrayAccess
 		
 		$arguments = array_merge($this->global, $arguments) ;
 		
+		Eve::register('scope', $this) ;
 		
-		
-		return $this->eve->call($scope, $method, $arguments) ;
+		return $this->eve->call($scope, $method, $arguments, $cache) ;
 	}
 	
 	
