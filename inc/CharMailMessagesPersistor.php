@@ -36,6 +36,7 @@ class CharMailMessagesPersistor extends AbstractPersistor
 			$bean = R::dispense('message') ;
 			
 			$bean->characterID = $character->global['characterID'] ;
+			$bean->message = null ;
 			
 			foreach($message as $k => $v)
 			{
